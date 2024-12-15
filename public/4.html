@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="profile-container">
+        <h1>Профиль пользователя</h1>
+        
+        <p><strong>Имя пользователя:</strong> <span id="username">Не указано</span></p>
+        <p><strong>Email:</strong> <span id="email">Не указано</span></p>
+        <p><strong>Дата рождения:</strong> <span id="birthdate">Не указано</span></p>
+        <p><strong>Пол:</strong> <span id="gender">Не указано</span></p>
+        <p><strong>Дата регистрации:</strong> <span id="registration-date">Не указано</span></p>
+
+        <a href="index.html" class="button">На главную</a>
+        <button id="logout-button" class="button">Выйти</button>
+    </section>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        document.getElementById("username").textContent = params.get("username") || "Не указано";
+        document.getElementById("email").textContent = params.get("email") || "Не указано";
+        document.getElementById("birthdate").textContent = params.get("birthdate") || "Не указано";
+        document.getElementById("gender").textContent = params.get("gender") || "Не указано";
+        document.getElementById("registration-date").textContent = params.get("registrationDate") || "Не указано";
+
+        document.getElementById("logout-button").addEventListener("click", function() {
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="form-container">
+        <h1>Вход</h1>
+        <form action="/login" method="POST">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" placeholder="Введите имя пользователя" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+
+            <button type="submit" class="button">Войти</button>
+        </form>
+        <a href="index.html" class="button large-button">Вернуться на главную</a>
+    </section>
+</body>
+</html>
