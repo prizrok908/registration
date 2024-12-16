@@ -70,5 +70,23 @@
     "gender": "Мужской",
     "password": "kjdsnfbd",
     "registrationDate": "16.12.2024, 10:59:36"
+  },
+  {
+    "id": "107b23dc-6ebe-4bc0-b407-83f98fb80c3e",
+    "username": "лво",
+    "email": "kjsdv@ss.ss",
+    "birthdate": "2024-12-29",
+    "gender": "Мужской",
+    "password": "kasjnv",
+    "registrationDate": "16.12.2024, 12:04:58"
+  },
+  {
+    "id": "76b49378-361b-4703-bbea-e1b3ec9fc945",
+    "username": "skjdvs",
+    "email": "kjasdvkj@ss.ss",
+    "birthdate": "2024-12-31",
+    "gender": "Мужской",
+    "password": "asvjnsadv",
+    "registrationDate": "16.12.2024, 12:05:20"
   }
 ]
