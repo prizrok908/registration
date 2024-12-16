@@ -2,34 +2,87 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль пользователя</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Подключение Bootstrap -->
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    <!-- Подключение пользовательского CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Общие стили */
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .profile-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .btn-primary, .btn-danger {
+            background-color: #ff6200 !important;
+            border-color: #ff6200 !important;
+            color: #fff !important;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-primary:hover, .btn-danger:hover {
+            background-color: #e55d00 !important;
+            border-color: #e55d00 !important;
+            transform: scale(1.05);
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <section class="profile-container">
+    <div class="profile-container">
         <h1>Профиль пользователя</h1>
-        
-        <p><strong>Имя пользователя:</strong> <span id="username">Не указано</span></p>
-        <p><strong>Email:</strong> <span id="email">Не указано</span></p>
-        <p><strong>Дата рождения:</strong> <span id="birthdate">Не указано</span></p>
-        <p><strong>Пол:</strong> <span id="gender">Не указано</span></p>
-        <p><strong>Дата регистрации:</strong> <span id="registration-date">Не указано</span></p>
-
-        <a href="index.html" class="button">На главную</a>
-        <button id="logout-button" class="button">Выйти</button>
-    </section>
+        <p><strong>Имя пользователя:</strong> <span id="username">Загрузка...</span></p>
+        <p><strong>Email:</strong> <span id="email">Загрузка...</span></p>
+        <p><strong>Дата рождения:</strong> <span id="birthdate">Загрузка...</span></p>
+        <p><strong>Пол:</strong> <span id="gender">Загрузка...</span></p>
+        <p><strong>Дата регистрации:</strong> <span id="registrationDate">Загрузка...</span></p>
+        <a href="/" class="btn btn-primary">На главную</a>
+        <button class="btn btn-danger" id="logout-button">Выйти</button>
+    </div>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        
-        document.getElementById("username").textContent = params.get("username") || "Не указано";
-        document.getElementById("email").textContent = params.get("email") || "Не указано";
-        document.getElementById("birthdate").textContent = params.get("birthdate") || "Не указано";
-        document.getElementById("gender").textContent = params.get("gender") || "Не указано";
-        document.getElementById("registration-date").textContent = params.get("registrationDate") || "Не указано";
+        const userId = window.location.pathname.split("/").pop();
 
-        document.getElementById("logout-button").addEventListener("click", function() {
-            window.location.href = "index.html";
+        fetch(`/api/user/${userId}`)
+            .then((response) => response.json())
+            .then((user) => {
+                document.getElementById("username").textContent = user.username || "Не указано";
+                document.getElementById("email").textContent = user.email || "Не указано";
+                document.getElementById("birthdate").textContent = user.birthdate || "Не указано";
+                document.getElementById("gender").textContent = user.gender || "Не указано";
+                document.getElementById("registrationDate").textContent = user.registrationDate || "Не указано";
+            })
+            .catch((err) => {
+                console.error("Ошибка загрузки данных пользователя:", err);
+                document.body.innerHTML = "<p>Пользователь не найден.</p>";
+            });
+
+        document.getElementById("logout-button").addEventListener("click", () => {
+            window.location.href = "/";
         });
     </script>
 </body>

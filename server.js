@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const PORT = 3000;
@@ -15,7 +16,8 @@ app.post("/save", (req, res) => {
         timeZone: "Europe/Minsk",
     });
 
-    const newUser = { username, email, birthdate, gender, password, registrationDate };
+    const id = uuidv4();
+    const newUser = { id, username, email, birthdate, gender, password, registrationDate };
 
     fs.readFile("users.json", "utf8", (err, data) => {
         let users = [];
@@ -30,31 +32,35 @@ app.post("/save", (req, res) => {
                 console.error("Ошибка сохранения:", err);
                 res.status(500).send("Ошибка сервера.");
             } else {
-                res.redirect(`/4.html?username=${username}&email=${email}&birthdate=${birthdate}&gender=${gender}&registrationDate=${registrationDate}`);
+                res.redirect(`/user/${id}`);
             }
         });
     });
 });
 
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
+app.get("/api/user/:id", (req, res) => {
+    const userId = req.params.id;
 
     fs.readFile("users.json", "utf8", (err, data) => {
         if (err) {
             console.error("Ошибка чтения файла:", err);
-            res.status(500).send("Ошибка сервера.");
+            res.status(500).json({ error: "Ошибка сервера." });
             return;
         }
 
         const users = JSON.parse(data);
-        const user = users.find(u => u.username === username && u.password === password);
+        const user = users.find((u) => u.id === userId);
 
         if (user) {
-            res.redirect(`/4.html?username=${user.username}&email=${user.email}&birthdate=${user.birthdate}&gender=${user.gender}&registrationDate=${user.registrationDate}`);
+            res.json(user);
         } else {
-            res.send("Неверное имя пользователя или пароль.");
+            res.status(404).json({ error: "Пользователь не найден." });
         }
     });
+});
+
+app.get("/user/:id", (req, res) => {
+    res.sendFile(__dirname + "/public/4.html");
 });
 
 app.listen(PORT, () => {
